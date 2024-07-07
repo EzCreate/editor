@@ -89,7 +89,7 @@
                 var blob = new Blob([code], { type: 'text/plain' });
                 var link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = 'code.js';
+                link.download = 'code.p5js';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
