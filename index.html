@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <table>
-        <tr>
-            <td><input type="button" id="runIt" value="Save"></td>
-            <td><input type="button" id="runIt" value="Open"></td>
-            <td><input type="button" id="runIt" value="Share"></td>
-        </tr>
-    </table>
     <meta charset="UTF-8">
     <title>EzCreate - Editor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +32,7 @@
             color: #ddd;
         }
 
-        #runIt {
+        #runIt, #saveCode, #loadCode {
             display: block;
             margin-top: 10px;
             padding: 10px 20px;
@@ -50,10 +43,15 @@
             cursor: pointer;
         }
 
-        #runIt:hover {
+        #runIt:hover, #saveCode:hover, #loadCode:hover {
             background-color: #45a049;
         }
+
+        #fileInput {
+            display: none;
+        }
     </style>
+
     <script type="text/javascript">
         let myVideo = null;
         let p5lm = null;
@@ -77,7 +75,6 @@
                 theme: 'dracula'
             });
 
-            var existingCanvas = document.querySelector('canvas');
             var runItButton = document.getElementById('runIt');
             runItButton.addEventListener('click', function() {
                 var code = window.myCodeMirror.getValue();
@@ -85,7 +82,36 @@
                 script.textContent = code;
                 document.body.appendChild(script);
             });
-        });  
+
+            var saveCodeButton = document.getElementById('saveCode');
+            saveCodeButton.addEventListener('click', function() {
+                var code = window.myCodeMirror.getValue();
+                var blob = new Blob([code], { type: 'text/plain' });
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'code.js';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            var loadCodeButton = document.getElementById('loadCode');
+            var fileInput = document.getElementById('fileInput');
+            loadCodeButton.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function(event) {
+                var file = event.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        window.myCodeMirror.setValue(e.target.result);
+                    };
+                    reader.readAsText(file);
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -93,11 +119,16 @@
 function draw() {
     image(myVideo, 0, 0, width, height);
     fill(0, 150, 0);
-  	clear();
+    clear();
     ellipse(mouseX, mouseY, 50, 50);
-}          
+}
     </textarea>
-    <br>
-    <input type="button" id="runIt" value="Run">
+    <center>
+        <br>
+        <input type="button" id="runIt" value="Run">
+        <input type="button" id="saveCode" value="Save">
+        <input type="button" id="loadCode" value="Load">
+        <input type="file" id="fileInput">
+    </center>
 </body>
 </html>
