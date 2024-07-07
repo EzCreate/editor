@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.css">
     <link rel="stylesheet" href="https://codemirror.net/5/theme/dracula.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/mode/javascript/javascript.min.js"></script>
+    <table>
+        <tr>
+            <td><input type="button" id="runIt" value="Run"></td>
+            <td><input type="button" id="saveCode" value="Save"></td>
+            <td><input type="button" id="loadCode" value="Load"></td>
+            <td><button id="otherbutton" onclick="window.location.href='https://www.example.com';">Upload</button></td>
+            <td><input type="file" id="fileInput"></td>
+        </tr>
+    </table>
 
     <style>
         body {
@@ -32,7 +41,7 @@
             color: #ddd;
         }
 
-        #runIt, #saveCode, #loadCode {
+        #runIt, #saveCode, #loadCode, #otherbutton {
             display: block;
             margin-top: 10px;
             padding: 10px 20px;
@@ -123,12 +132,5 @@ function draw() {
     ellipse(mouseX, mouseY, 50, 50);
 }
     </textarea>
-    <center>
-        <br>
-        <input type="button" id="runIt" value="Run">
-        <input type="button" id="saveCode" value="Save">
-        <input type="button" id="loadCode" value="Load">
-        <input type="file" id="fileInput">
-    </center>
 </body>
 </html>
